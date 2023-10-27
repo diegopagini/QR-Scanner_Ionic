@@ -1,0 +1,7 @@
+{
+  "name": "qr",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
