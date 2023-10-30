@@ -8,6 +8,24 @@
       "schematics": {
         "@ionic/angular-toolkit:page": {
           "styleext": "scss",
+          "standalone": true,
+          "skipTest": true
+        },
+        "@schematics/angular:component": {
+          "style": "scss",
+          "skipTests": true,
+          "standalone": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true,
+          "standalone": true
+        },
+        "@schematics/angular:module": {
+          "skipTests": true,
+          "standalone": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true,
           "standalone": true
         }
       },
