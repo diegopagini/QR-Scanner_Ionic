@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { Coupon } from 'src/app/models/cupon.model';
 import { CouponsService } from 'src/app/services/coupons.service';
@@ -10,20 +10,30 @@ import { CouponsService } from 'src/app/services/coupons.service';
   templateUrl: './coupons.page.html',
   styleUrls: ['./coupons.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [IonicModule, CommonModule],
 })
 export class CouponsPage implements OnInit {
   coupons: Coupon[];
 
-  constructor(private readonly _couponsService: CouponsService) {}
+  constructor(
+    private readonly _couponsService: CouponsService,
+    private readonly _router: Router
+  ) {}
 
   ngOnInit(): void {
-    this._couponsService.getCoupons().then((value) => {
+    this._couponsService.getCoupons().then((value: Coupon[]) => {
       this.coupons = value;
     });
   }
 
   changeActive(coupon: Coupon): void {
     coupon.active = !coupon.active;
+  }
+
+  goToCard(): void {
+    this._couponsService.setActiveCoupons(
+      this.coupons.filter((el: Coupon) => el.active)
+    );
+    this._router.navigate(['card-coupon']);
   }
 }

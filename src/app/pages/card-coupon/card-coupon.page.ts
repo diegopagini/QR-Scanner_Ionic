@@ -1,20 +1,19 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { CouponsService } from 'src/app/services/coupons.service';
 
 @Component({
   selector: 'app-card-coupon',
   templateUrl: './card-coupon.page.html',
   styleUrls: ['./card-coupon.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule],
 })
 export class CardCouponPage implements OnInit {
+  constructor(private readonly _couponsService: CouponsService) {}
 
-  constructor() { }
-
-  ngOnInit() {
+  ngOnInit(): void {
+    console.log(this._couponsService.getActiveCoupons());
   }
-
 }
