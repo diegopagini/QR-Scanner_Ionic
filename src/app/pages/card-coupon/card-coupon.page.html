@@ -6,5 +6,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <qrcode [qrdata]="qrCode" [errorCorrectionLevel]="'M'" [width]="280"></qrcode>
+  <qrcode
+    [qrdata]="qrCode"
+    [errorCorrectionLevel]="'M'"
+    [width]="280"
+    elementType="svg"
+  ></qrcode>
 </ion-content>

@@ -1,9 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+  BarcodeScanner,
+  CheckPermissionResult,
+  ScanResult,
+} from '@capacitor-community/barcode-scanner';
+import { AlertController, IonicModule } from '@ionic/angular';
 import { Coupon } from 'src/app/models/cupon.model';
 import { CouponsService } from 'src/app/services/coupons.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-coupons',
@@ -18,8 +24,10 @@ export class CouponsPage implements OnInit {
   showCamera = false;
 
   constructor(
+    private readonly _alertController: AlertController,
     private readonly _couponsService: CouponsService,
-    private readonly _router: Router
+    private readonly _router: Router,
+    private readonly _toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -40,11 +48,51 @@ export class CouponsPage implements OnInit {
     this._router.navigate(['card-coupon']);
   }
 
-  startCamera(): void {
-    this.showCamera = true;
+  async startCamera(): Promise<void> {
+    const permission: CheckPermissionResult =
+      await BarcodeScanner.checkPermission({ force: true });
+
+    if (permission.granted) {
+      this.showCamera = true;
+      const result: ScanResult = await BarcodeScanner.startScan();
+
+      if (result.hasContent) {
+        try {
+          const coupon: Coupon = JSON.parse(result.content);
+
+          if (this.isCouponValid(coupon)) {
+            this._toastService.presentToast({
+              message: 'QR escaneado correctamente',
+            });
+            this.coupons.push(coupon);
+          } else this._toastService.presentToast({ message: 'QR error' });
+        } catch (error) {
+          this._toastService.presentToast({ message: 'QR error' });
+        }
+      }
+
+      this.hideCamera();
+    } else {
+      const alert: HTMLIonAlertElement = await this._alertController.create({
+        message: 'Esta app necesita la camara para funcionar',
+      });
+
+      await alert.present();
+    }
   }
 
-  hideCamera(): void {
+  async hideCamera(): Promise<void> {
     this.showCamera = false;
+    BarcodeScanner.stopScan();
+  }
+
+  private isCouponValid(coupon: Coupon): boolean {
+    return coupon &&
+      coupon.id_pdroduct &&
+      coupon.img &&
+      coupon.name &&
+      coupon.discount
+      ? true
+      : false;
   }
 }

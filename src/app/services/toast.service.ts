@@ -4,9 +4,9 @@ import { ToastController } from '@ionic/angular';
 type Position = 'top' | 'middle' | 'bottom';
 
 interface Toast {
-  duration: number;
+  duration?: number;
   message: string;
-  position: Position;
+  position?: Position;
 }
 
 @Injectable({
