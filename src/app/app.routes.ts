@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { CouponGuard } from './guards/coupon.guard';
+
 export const routes: Routes = [
   {
     path: 'coupons',
@@ -12,6 +14,7 @@ export const routes: Routes = [
       import('./pages/card-coupon/card-coupon.page').then(
         (m) => m.CardCouponPage
       ),
+    canActivate: [CouponGuard],
   },
   {
     path: '',
