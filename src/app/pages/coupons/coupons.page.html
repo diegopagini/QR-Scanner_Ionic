@@ -24,7 +24,7 @@
   </ion-card>
 
   <ion-fab horizontal="start" vertical="bottom" slot="fixed">
-    <ion-fab-button (click)="goToCard()">
+    <ion-fab-button [disabled]="!couponsActive" (click)="goToCard()">
       <ion-icon name="card-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

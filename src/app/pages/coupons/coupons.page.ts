@@ -14,6 +14,7 @@ import { CouponsService } from 'src/app/services/coupons.service';
 })
 export class CouponsPage implements OnInit {
   coupons: Coupon[];
+  couponsActive = false;
 
   constructor(
     private readonly _couponsService: CouponsService,
@@ -28,6 +29,7 @@ export class CouponsPage implements OnInit {
 
   changeActive(coupon: Coupon): void {
     coupon.active = !coupon.active;
+    this.couponsActive = this.coupons.some((el: Coupon) => el.active);
   }
 
   goToCard(): void {
