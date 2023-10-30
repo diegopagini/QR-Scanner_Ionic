@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { cardOutline } from 'ionicons/icons';
+import { cameraOutline, cardOutline, close } from 'ionicons/icons';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +11,6 @@ import { cardOutline } from 'ionicons/icons';
 })
 export class AppComponent implements OnInit {
   ngOnInit(): void {
-    addIcons({ cardOutline });
+    addIcons({ cardOutline, close, cameraOutline });
   }
 }

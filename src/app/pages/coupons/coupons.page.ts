@@ -15,6 +15,7 @@ import { CouponsService } from 'src/app/services/coupons.service';
 export class CouponsPage implements OnInit {
   coupons: Coupon[];
   couponsActive = false;
+  showCamera = false;
 
   constructor(
     private readonly _couponsService: CouponsService,
@@ -37,5 +38,13 @@ export class CouponsPage implements OnInit {
       this.coupons.filter((el: Coupon) => el.active)
     );
     this._router.navigate(['card-coupon']);
+  }
+
+  startCamera(): void {
+    this.showCamera = true;
+  }
+
+  hideCamera(): void {
+    this.showCamera = false;
   }
 }
